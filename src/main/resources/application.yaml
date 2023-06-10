@@ -1,0 +1,13 @@
+spring:
+  jpa:
+#    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate.jdbc.batch_size: 50
+  datasource:
+    url: jdbc:postgresql://localhost:5432/data_integration
+    username: postgres
+    password: postgres
+    driverClassName: org.postgresql.Driver
+

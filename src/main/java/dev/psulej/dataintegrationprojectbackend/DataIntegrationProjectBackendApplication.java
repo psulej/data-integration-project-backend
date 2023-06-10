@@ -9,5 +9,4 @@ public class DataIntegrationProjectBackendApplication {
     public static void main(String[] args) {
         SpringApplication.run(DataIntegrationProjectBackendApplication.class, args);
     }
-
 }
