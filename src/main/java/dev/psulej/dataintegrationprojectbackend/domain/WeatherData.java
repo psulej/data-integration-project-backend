@@ -9,6 +9,7 @@ import java.time.Instant;
 @Entity
 @Table(name = "weather_data")
 @Builder
+@Getter
 @Setter(AccessLevel.PRIVATE)
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -23,18 +24,18 @@ public class WeatherData {
         private Instant date;
 
         @Column(name = "temperature")
-        private float temperature;
+        private Float temperature;
 
         @Column(name = "pressure")
-        private float pressure;
+        private Float pressure;
 
         @Column(name = "wind_velocity")
-        private float windVelocity;
+        private Float windVelocity;
 
         @Column(name = "wind_direction")
-        private float windDirection;
+        private Float windDirection;
 
         @Column(name = "precipitation")
-        private float precipitation;
+        private Float precipitation;
 }
 

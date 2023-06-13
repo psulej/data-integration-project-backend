@@ -1,5 +1,4 @@
-"Date","
-Temperature","Pressure","WindVelocity","WindDirection","Precipitation"
+"Date","Temperature","Pressure","WindVelocity","WindDirection","Precipitation"
 "1/1/2019 0:00","-3.2","943.4","0.0","211.4","0.0"
 "1/1/2019 1:00","-3.0","943.3","0.0","211.1","0.0"
 "1/1/2019 2:00","-3.3","943.0","0.0","211.0","0.0"
