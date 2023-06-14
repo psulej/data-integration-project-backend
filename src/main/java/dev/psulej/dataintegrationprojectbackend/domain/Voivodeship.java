@@ -5,11 +5,13 @@ import lombok.*;
 
 @Entity
 @Table(name = "voivodeship")
+@SequenceGenerator(name = "voivodeshipIdSeq", sequenceName = "voivodeship_seq", initialValue = 1, allocationSize = 50)
 @Setter(AccessLevel.PRIVATE)
 @Getter
+@ToString
+@EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@SequenceGenerator(name = "voivodeshipIdSeq", sequenceName = "voivodeship_seq", initialValue = 1, allocationSize = 50)
 public class Voivodeship {
 
     @Id

@@ -18,9 +18,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
@@ -47,7 +47,9 @@ public class MortalityDataInitializer {
             Sheet sheet = workbook.getSheetAt(0);
             List<MortalityData> mortalityDataList = new ArrayList<>();
 
-            Map<String, Voivodeship> voivodeshipByName = new HashMap<>();
+            List<Voivodeship> voivodeships = voivodeshipRepository.findAll();
+            Map<String, Voivodeship> voivodeshipByName = voivodeships.stream()
+                    .collect(Collectors.toMap(Voivodeship::getName, voivodeship -> voivodeship));
 
             for (Row row : sheet) {
                 if (row.getRowNum() == 0) {
@@ -90,13 +92,17 @@ public class MortalityDataInitializer {
                     if (mortalityDataList.size() == INSERT_BATCH_SIZE) {
                         mortalityDataRepository.saveAll(mortalityDataList);
                         mortalityDataRepository.flush();
+                        log.info("Mortality data batch persisted (size = {})", mortalityDataList.size());
                         mortalityDataList.clear();
                     }
                 }
             }
             if (mortalityDataList.size() > 0) {
                 mortalityDataRepository.saveAll(mortalityDataList);
+                log.info("Mortality data batch persisted (size = {})", mortalityDataList.size());
             }
+
+            log.info("Weather data file has been processed");
             workbook.close();
             fis.close();
         } catch (IOException e) {

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Slf4j
 @RequiredArgsConstructor
-public class InitDataReader implements CommandLineRunner {
+public class InitDataLoader implements CommandLineRunner {
 
     private final WeatherDataInitializer weatherDataInitializer;
     private final MortalityDataInitializer mortalityDataInitializer;
