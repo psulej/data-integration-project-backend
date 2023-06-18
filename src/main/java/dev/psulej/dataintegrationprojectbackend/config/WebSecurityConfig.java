@@ -35,6 +35,7 @@ public class WebSecurityConfig {
                 .requestMatchers("/public/**", "/auth/**").permitAll()
                 .requestMatchers("/", "/error", "/csrf").permitAll()
                 .requestMatchers("/ws/**").permitAll()
+                .requestMatchers("/data/weather/export/xml").permitAll()
                 .requestMatchers("/auth/register", "/auth/authenticate").permitAll()
                 .anyRequest().authenticated();
         http.addFilterBefore(tokenAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

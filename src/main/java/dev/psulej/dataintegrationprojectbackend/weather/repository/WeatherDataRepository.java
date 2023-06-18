@@ -3,6 +3,7 @@ package dev.psulej.dataintegrationprojectbackend.weather.repository;
 import dev.psulej.dataintegrationprojectbackend.weather.domain.WeatherData;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -21,6 +22,8 @@ public interface WeatherDataRepository extends JpaRepository<WeatherData, Long> 
 
     Page<WeatherData> findByDateBetween(Instant dateFrom, Instant dateTo, Pageable pageable);
 
+    @Query("SELECT wd FROM WeatherData wd")
+    Slice<WeatherData> findSlice(Pageable pageable);
 
     @Query(
             value = """
