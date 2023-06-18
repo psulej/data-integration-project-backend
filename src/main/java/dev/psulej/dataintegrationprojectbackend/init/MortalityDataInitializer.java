@@ -17,6 +17,10 @@ import org.springframework.util.ResourceUtils;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -78,10 +82,13 @@ public class MortalityDataInitializer {
                         voivodeship = voivodeshipByName.get(voivodeshipName);
                     }
 
+                    Instant mortalityMeasurementTime = ZonedDateTime.of(
+                            LocalDateTime.of(year, month, 1, 0, 0), ZoneOffset.UTC
+                    ).toInstant();
+
                     MortalityData mortalityData = MortalityData.builder()
                             .voivodeship(voivodeship)
-                            .year(year)
-                            .monthNumber(month)
+                            .date(mortalityMeasurementTime)
                             .womanUnder65Age(womanUnder65Age)
                             .womanOver65Age(womanOver65Age)
                             .manUnder65Age(manUnder65Age)
@@ -106,7 +113,7 @@ public class MortalityDataInitializer {
             workbook.close();
             fis.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("Error occurred during loading mortality data file", e);
         }
     }
 

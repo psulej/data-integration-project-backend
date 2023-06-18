@@ -2,6 +2,8 @@ package dev.psulej.dataintegrationprojectbackend.domain;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.Instant;
+
 @Entity
 @Table(name = "mortality_data")
 @Builder
@@ -20,11 +22,14 @@ public class MortalityData {
     @JoinColumn(name = "voivodeship_id", unique = false, referencedColumnName = "id")
     Voivodeship voivodeship;
 
-    @Column(name = "year")
-    int year;
+    @Column(name = "mortality_data_date")
+    private Instant date;
 
-    @Column(name = "month_number")
-    int monthNumber;
+//    @Column(name = "year")
+//    int year;
+//
+//    @Column(name = "month_number")
+//    int monthNumber;
 
     @Column(name = "woman_under_65_age")
     int womanUnder65Age;

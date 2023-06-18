@@ -6,9 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
 import java.time.*;
-
 
 @Service
 @RequiredArgsConstructor
@@ -25,6 +23,7 @@ public class WeatherDataService {
                 LocalDate.of(2020, Month.DECEMBER, 31).atStartOfDay(),
                 ZoneOffset.UTC
         ).toInstant();
+
 
         return weatherDataRepository.findByDateBetween(dateFrom, dateTo, pageable);
     }

@@ -31,14 +31,17 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests()
+                .requestMatchers("/actuator/**").permitAll()
                 .requestMatchers("/public/**", "/auth/**").permitAll()
                 .requestMatchers("/", "/error", "/csrf").permitAll()
+                .requestMatchers("/ws/**").permitAll()
                 .requestMatchers("/auth/register", "/auth/authenticate").permitAll()
                 .anyRequest().authenticated();
         http.addFilterBefore(tokenAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         http.exceptionHandling(e -> e.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)));
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.cors().and().csrf().disable();
+        http.cors().disable();
+        http.csrf().disable();
         return http.build();
     }
 

@@ -1,0 +1,30 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:tns="http://www.psulej.dev/dataintegrationprojectbackend"
+           targetNamespace="http://www.psulej.dev/dataintegrationprojectbackend"
+           elementFormDefault="qualified">
+
+
+    <xs:element name="getWeatherDataRequest">
+        <xs:complexType>
+            <xs:sequence>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getWeatherDataResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="averageWeatherData" type="tns:weatherData"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="weatherData">
+        <xs:sequence>
+            <xs:element name="averageTemperature" type="xs:float"/>
+            <xs:element name="averagePressure" type="xs:float"/>
+            <xs:element name="averageWindVelocity" type="xs:float"/>
+            <xs:element name="averagePrecipitation" type="xs:float"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>
