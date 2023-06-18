@@ -40,8 +40,7 @@ public class WebSecurityConfig {
         http.addFilterBefore(tokenAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         http.exceptionHandling(e -> e.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)));
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.cors().disable();
-        http.csrf().disable();
+        http.cors().and().csrf().disable();
         return http.build();
     }
 

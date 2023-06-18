@@ -1,7 +1,7 @@
-package dev.psulej.dataintegrationprojectbackend.service;
+package dev.psulej.dataintegrationprojectbackend.weather.service;
 
-import dev.psulej.dataintegrationprojectbackend.domain.WeatherData;
-import dev.psulej.dataintegrationprojectbackend.repository.WeatherDataRepository;
+import dev.psulej.dataintegrationprojectbackend.weather.domain.WeatherData;
+import dev.psulej.dataintegrationprojectbackend.weather.repository.WeatherDataRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

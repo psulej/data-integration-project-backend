@@ -1,6 +1,6 @@
-package dev.psulej.dataintegrationprojectbackend.init;
-import dev.psulej.dataintegrationprojectbackend.domain.WeatherData;
-import dev.psulej.dataintegrationprojectbackend.repository.WeatherDataRepository;
+package dev.psulej.dataintegrationprojectbackend.weather.init;
+import dev.psulej.dataintegrationprojectbackend.weather.domain.WeatherData;
+import dev.psulej.dataintegrationprojectbackend.weather.repository.WeatherDataRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.csv.CSVFormat;
@@ -14,7 +14,6 @@ import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
-import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.*;

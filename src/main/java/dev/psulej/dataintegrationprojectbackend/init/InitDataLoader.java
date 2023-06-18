@@ -1,10 +1,11 @@
 package dev.psulej.dataintegrationprojectbackend.init;
+import dev.psulej.dataintegrationprojectbackend.mortality.init.MortalityDataInitializer;
+import dev.psulej.dataintegrationprojectbackend.weather.init.WeatherDataInitializer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.stereotype.Component;
 
-@Component
+//@Component
 @Slf4j
 @RequiredArgsConstructor
 public class InitDataLoader implements CommandLineRunner {

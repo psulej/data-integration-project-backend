@@ -1,6 +1,6 @@
-package dev.psulej.dataintegrationprojectbackend.repository;
+package dev.psulej.dataintegrationprojectbackend.mortality.repository;
 
-import dev.psulej.dataintegrationprojectbackend.domain.MortalityData;
+import dev.psulej.dataintegrationprojectbackend.mortality.domain.MortalityData;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

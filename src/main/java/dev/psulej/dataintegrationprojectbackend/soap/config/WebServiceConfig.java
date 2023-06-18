@@ -1,5 +1,6 @@
 package dev.psulej.dataintegrationprojectbackend.soap.config;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -12,10 +13,6 @@ import org.springframework.ws.wsdl.wsdl11.DefaultWsdl11Definition;
 import org.springframework.xml.xsd.SimpleXsdSchema;
 import org.springframework.xml.xsd.XsdSchema;
 import org.xml.sax.SAXException;
-import org.xml.sax.SAXNotRecognizedException;
-import org.xml.sax.SAXNotSupportedException;
-
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
@@ -44,9 +41,10 @@ public class WebServiceConfig extends WsConfigurerAdapter {
     }
 
     @Bean(name = "weather")
-    public DefaultWsdl11Definition defaultWsdl11Definition(XsdSchema weatherSchema) {
+    public DefaultWsdl11Definition weatherWsdl11Definition(XsdSchema weatherSchema) {
         DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
         wsdl11Definition.setPortTypeName("WeatherDataPort");
+        wsdl11Definition.setServiceName("WeatherDataService");
         wsdl11Definition.setLocationUri("/ws");
         wsdl11Definition.setTargetNamespace("http://www.psulej.dev/dataintegrationprojectbackend");
         wsdl11Definition.setSchema(weatherSchema);
@@ -57,4 +55,5 @@ public class WebServiceConfig extends WsConfigurerAdapter {
     public XsdSchema weatherSchema() {
         return new SimpleXsdSchema(new ClassPathResource("weather.xsd"));
     }
+
 }

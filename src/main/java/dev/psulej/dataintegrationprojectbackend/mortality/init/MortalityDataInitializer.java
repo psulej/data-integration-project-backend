@@ -1,9 +1,9 @@
-package dev.psulej.dataintegrationprojectbackend.init;
+package dev.psulej.dataintegrationprojectbackend.mortality.init;
 
-import dev.psulej.dataintegrationprojectbackend.domain.MortalityData;
-import dev.psulej.dataintegrationprojectbackend.domain.Voivodeship;
-import dev.psulej.dataintegrationprojectbackend.repository.MortalityDataRepository;
-import dev.psulej.dataintegrationprojectbackend.repository.VoivodeshipRepository;
+import dev.psulej.dataintegrationprojectbackend.mortality.domain.MortalityData;
+import dev.psulej.dataintegrationprojectbackend.mortality.domain.Voivodeship;
+import dev.psulej.dataintegrationprojectbackend.mortality.repository.MortalityDataRepository;
+import dev.psulej.dataintegrationprojectbackend.mortality.repository.VoivodeshipRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.Row;

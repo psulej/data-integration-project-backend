@@ -14,13 +14,14 @@
     <xs:element name="getWeatherDataResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="averageWeatherData" type="tns:weatherData"/>
+                <xs:element name="averageWeatherData" type="tns:weatherData" maxOccurs="unbounded"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
 
     <xs:complexType name="weatherData">
         <xs:sequence>
+            <xs:element name="year" type="xs:int"/>
             <xs:element name="averageTemperature" type="xs:float"/>
             <xs:element name="averagePressure" type="xs:float"/>
             <xs:element name="averageWindVelocity" type="xs:float"/>

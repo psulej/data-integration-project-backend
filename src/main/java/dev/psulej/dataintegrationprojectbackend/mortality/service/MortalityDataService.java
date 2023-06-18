@@ -1,7 +1,7 @@
-package dev.psulej.dataintegrationprojectbackend.service;
+package dev.psulej.dataintegrationprojectbackend.mortality.service;
 
-import dev.psulej.dataintegrationprojectbackend.domain.MortalityData;
-import dev.psulej.dataintegrationprojectbackend.repository.MortalityDataRepository;
+import dev.psulej.dataintegrationprojectbackend.mortality.domain.MortalityData;
+import dev.psulej.dataintegrationprojectbackend.mortality.repository.MortalityDataRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

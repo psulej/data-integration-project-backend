@@ -1,8 +1,6 @@
-package dev.psulej.dataintegrationprojectbackend.repository;
+package dev.psulej.dataintegrationprojectbackend.weather.repository;
 
-import dev.psulej.dataintegrationprojectbackend.domain.WeatherData;
-import dev.psulej.dataintegrationprojectbackend.soap.dto.WeatherDataSummary;
-import jakarta.persistence.*;
+import dev.psulej.dataintegrationprojectbackend.weather.domain.WeatherData;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -23,14 +21,15 @@ public interface WeatherDataRepository extends JpaRepository<WeatherData, Long> 
 
     Page<WeatherData> findByDateBetween(Instant dateFrom, Instant dateTo, Pageable pageable);
 
+
     @Query(
             value = """
             SELECT
                 EXTRACT(YEAR FROM weather_data_date) as year,
-                AVG(temperature) AS temperature,
-                AVG(pressure) AS pressure,
-                AVG(precipitation) AS precipitation,
-                AVG(wind_velocity) AS wind_velocity
+                AVG(temperature) AS AverageTemperature,
+                AVG(pressure) AS AveragePressure,
+                AVG(precipitation) AS AveragePrecipitation,
+                AVG(wind_velocity) AS AverageWindVelocity
             FROM
                 weather_data
             WHERE
@@ -42,5 +41,6 @@ public interface WeatherDataRepository extends JpaRepository<WeatherData, Long> 
             """,
             nativeQuery = true
     )
-    List<Tuple> getYearlyAverageWeatherData();
+    List<WeatherDataSummaryProjection> getYearlyAverageWeatherData();
 }
+

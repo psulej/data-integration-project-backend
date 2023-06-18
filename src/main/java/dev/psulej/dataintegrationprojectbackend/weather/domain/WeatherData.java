@@ -1,4 +1,4 @@
-package dev.psulej.dataintegrationprojectbackend.domain;
+package dev.psulej.dataintegrationprojectbackend.weather.domain;
 
 import jakarta.persistence.*;
 import lombok.*;

@@ -1,4 +1,4 @@
-package dev.psulej.dataintegrationprojectbackend.soap.dto;
+package dev.psulej.dataintegrationprojectbackend.weather.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
