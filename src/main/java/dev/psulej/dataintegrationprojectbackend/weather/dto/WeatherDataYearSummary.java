@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @Builder
-public class WeatherDataSummary {
+public class WeatherDataYearSummary {
 
     private int year;
 

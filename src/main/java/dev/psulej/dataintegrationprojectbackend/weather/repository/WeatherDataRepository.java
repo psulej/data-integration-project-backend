@@ -1,5 +1,6 @@
 package dev.psulej.dataintegrationprojectbackend.weather.repository;
 
+import dev.psulej.dataintegrationprojectbackend.summary.WeatherDataYearMonthSummaryProjection;
 import dev.psulej.dataintegrationprojectbackend.weather.domain.WeatherData;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,7 +12,6 @@ import org.springframework.stereotype.Repository;
 
 import java.time.Instant;
 import java.util.List;
-
 
 @Repository
 public interface WeatherDataRepository extends JpaRepository<WeatherData, Long> {
@@ -27,23 +27,40 @@ public interface WeatherDataRepository extends JpaRepository<WeatherData, Long> 
 
     @Query(
             value = """
-            SELECT
-                EXTRACT(YEAR FROM weather_data_date) as year,
-                AVG(temperature) AS AverageTemperature,
-                AVG(pressure) AS AveragePressure,
-                AVG(precipitation) AS AveragePrecipitation,
-                AVG(wind_velocity) AS AverageWindVelocity
-            FROM
-                weather_data
-            WHERE
-                 EXTRACT(YEAR FROM weather_data_date) IN (2019, 2020)
-            GROUP BY
-                EXTRACT(YEAR FROM weather_data_date)
-            ORDER BY
-                year desc
-            """,
+                    SELECT
+                        EXTRACT(YEAR FROM weather_data_date) as year,
+                        AVG(temperature) AS AverageTemperature,
+                        AVG(pressure) AS AveragePressure,
+                        AVG(precipitation) AS AveragePrecipitation,
+                        AVG(wind_velocity) AS AverageWindVelocity
+                    FROM
+                        weather_data
+                    WHERE
+                         EXTRACT(YEAR FROM weather_data_date) IN (2019, 2020)
+                    GROUP BY
+                        EXTRACT(YEAR FROM weather_data_date)
+                    ORDER BY
+                        year desc
+                    """,
             nativeQuery = true
     )
     List<WeatherDataSummaryProjection> getYearlyAverageWeatherData();
+
+
+    @Query(
+            value = """
+                    SELECT to_char(weather_data_date, 'YYYY-MM') as YearMonth,
+                           AVG(temperature)                      AS AverageTemperature,
+                           AVG(pressure)                         AS AveragePressure,
+                           AVG(precipitation)                    AS AveragePrecipitation,
+                           AVG(wind_velocity)                    AS AverageWindVelocity
+                    FROM weather_data
+                    GROUP BY YearMonth
+                    ORDER BY YearMonth desc;
+
+                    """, nativeQuery = true
+    )
+    List<WeatherDataYearMonthSummaryProjection> getYearMonthSummary();
+
 }
 
