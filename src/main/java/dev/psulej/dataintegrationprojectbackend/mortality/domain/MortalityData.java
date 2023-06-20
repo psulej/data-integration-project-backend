@@ -25,12 +25,6 @@ public class MortalityData {
     @Column(name = "mortality_data_date")
     private Instant date;
 
-//    @Column(name = "year")
-//    int year;
-//
-//    @Column(name = "month_number")
-//    int monthNumber;
-
     @Column(name = "woman_under_65_age")
     int womanUnder65Age;
 

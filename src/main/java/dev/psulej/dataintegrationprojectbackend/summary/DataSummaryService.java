@@ -46,6 +46,7 @@ public class DataSummaryService {
                     return DataSummary.builder()
                             .yearMonth(convertToYearMonth(yearMonth))
                             .averageTemperature(weatherDataYearMonthSummary.getAverageTemperature())
+                            .averagePressure(weatherDataYearMonthSummary.getAveragePressure())
                             .averagePrecipitation(weatherDataYearMonthSummary.getAveragePrecipitation())
                             .averageWindVelocity(weatherDataYearMonthSummary.getAverageWindVelocity())
                             .under65AgeDeath(mortalityDataYearMonthSummary.getUnder65AgeDeaths())

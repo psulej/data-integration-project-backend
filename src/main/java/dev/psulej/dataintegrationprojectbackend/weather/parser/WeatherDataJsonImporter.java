@@ -31,7 +31,6 @@ public class WeatherDataJsonImporter {
                     .findAndRegisterModules();
 
             JsonFactory factory = mapper.getFactory();
-
             JsonParser jsonParser = factory.createParser(inputStream);
 
             if (jsonParser.nextToken() != JsonToken.START_ARRAY) {

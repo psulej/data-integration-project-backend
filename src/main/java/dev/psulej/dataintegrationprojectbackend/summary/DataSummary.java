@@ -8,6 +8,7 @@ import java.time.YearMonth;
 public record DataSummary(
         YearMonth yearMonth,
         Float averageTemperature,
+        Float averagePressure,
         Float averagePrecipitation,
         Float averageWindVelocity,
         Integer manTotalDeaths,
