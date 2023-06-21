@@ -13,7 +13,7 @@ import java.time.Instant;
 @Setter(AccessLevel.PRIVATE)
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@SequenceGenerator(name = "weatherDataIdSeq", sequenceName = "weather_data_seq", initialValue = 1, allocationSize = 50)
+@SequenceGenerator(name = "weatherDataIdSeq", sequenceName = "weather_data_seq", initialValue = 1, allocationSize = 500)
 public class WeatherData {
 
         @Id

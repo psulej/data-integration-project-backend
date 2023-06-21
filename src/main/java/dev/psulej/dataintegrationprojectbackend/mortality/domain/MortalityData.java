@@ -11,7 +11,7 @@ import java.time.Instant;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@SequenceGenerator(name = "mortalityDataIdSeq", sequenceName = "mortality_data_seq", initialValue = 1, allocationSize = 50)
+@SequenceGenerator(name = "mortalityDataIdSeq", sequenceName = "mortality_data_seq", initialValue = 1, allocationSize = 500)
 public class MortalityData {
 
     @Id

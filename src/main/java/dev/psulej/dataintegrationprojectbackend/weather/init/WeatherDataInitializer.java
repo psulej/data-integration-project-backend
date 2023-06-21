@@ -1,4 +1,5 @@
 package dev.psulej.dataintegrationprojectbackend.weather.init;
+
 import dev.psulej.dataintegrationprojectbackend.weather.domain.WeatherData;
 import dev.psulej.dataintegrationprojectbackend.weather.repository.WeatherDataRepository;
 import lombok.RequiredArgsConstructor;
@@ -10,27 +11,33 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ResourceUtils;
 import org.springframework.util.StringUtils;
+
 import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
 @Slf4j
 public class WeatherDataInitializer {
 
-    public static final int INSERT_BATCH_SIZE = 250;
+    public static final int INSERT_BATCH_SIZE = 500;
 
     private final WeatherDataRepository weatherDataRepository;
 
     @Transactional
     public void initializeWeatherDataFromFile() throws FileNotFoundException {
-        weatherDataRepository.truncateTable();
-        readWeatherDataFromFile();
+        if(weatherDataRepository.count() == 0) {
+            weatherDataRepository.truncateTable();
+            readWeatherDataFromFile();
+        }
     }
 
     private void readWeatherDataFromFile() throws FileNotFoundException {

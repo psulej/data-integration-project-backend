@@ -1,4 +1,4 @@
-package dev.psulej.dataintegrationprojectbackend.mortality.export;
+package dev.psulej.dataintegrationprojectbackend.mortality.convert;
 
 import lombok.Builder;
 

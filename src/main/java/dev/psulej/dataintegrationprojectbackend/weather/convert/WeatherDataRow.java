@@ -1,12 +1,11 @@
-package dev.psulej.dataintegrationprojectbackend.weather.export;
+package dev.psulej.dataintegrationprojectbackend.weather.convert;
 
 import lombok.Builder;
 
 import java.time.Instant;
 
 @Builder
-public record WeatherDataDto(
-        Long id,
+public record WeatherDataRow(
         Instant date,
         Float temperature,
         Float pressure,
@@ -14,5 +13,4 @@ public record WeatherDataDto(
         Float windDirection,
         Float precipitation
 ) {
-
 }

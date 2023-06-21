@@ -1,10 +1,10 @@
-package dev.psulej.dataintegrationprojectbackend.weather.parser;
+package dev.psulej.dataintegrationprojectbackend.weather.convert;
 
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import dev.psulej.dataintegrationprojectbackend.common.parser.ObjectMapperProvider;
 import dev.psulej.dataintegrationprojectbackend.weather.domain.WeatherData;
 import dev.psulej.dataintegrationprojectbackend.weather.repository.WeatherDataRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,13 +22,14 @@ import java.util.List;
 public class WeatherDataJsonImporter {
 
     private static final int BATCH_SIZE = 500;
-    WeatherDataRepository weatherDataRepository;
+
+    private final ObjectMapperProvider objectMapperProvider;
+    private final WeatherDataRepository weatherDataRepository;
 
 
     public void importData(InputStream inputStream) {
         try {
-            ObjectMapper mapper = new ObjectMapper()
-                    .findAndRegisterModules();
+            ObjectMapper mapper = objectMapperProvider.jsonObjectMapper();
 
             JsonFactory factory = mapper.getFactory();
             JsonParser jsonParser = factory.createParser(inputStream);
@@ -40,7 +41,17 @@ public class WeatherDataJsonImporter {
             List<WeatherData> batch = new ArrayList<>(BATCH_SIZE);
 
             while (jsonParser.nextToken() == JsonToken.START_OBJECT) {
-                WeatherData weatherData = mapper.readValue(jsonParser, WeatherData.class);
+                WeatherDataRow weatherDataRow = mapper.readValue(jsonParser, WeatherDataRow.class);
+
+                WeatherData weatherData = WeatherData.builder()
+                        .date(weatherDataRow.date())
+                        .temperature(weatherDataRow.temperature())
+                        .pressure(weatherDataRow.pressure())
+                        .windVelocity(weatherDataRow.windVelocity())
+                        .windDirection(weatherDataRow.windDirection())
+                        .precipitation(weatherDataRow.precipitation())
+                        .build();
+
                 batch.add(weatherData);
 
                 if (batch.size() >= BATCH_SIZE) {

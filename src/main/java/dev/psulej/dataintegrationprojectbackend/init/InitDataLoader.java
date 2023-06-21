@@ -4,8 +4,9 @@ import dev.psulej.dataintegrationprojectbackend.weather.init.WeatherDataInitiali
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
 
-//@Component
+@Component
 @Slf4j
 @RequiredArgsConstructor
 public class InitDataLoader implements CommandLineRunner {

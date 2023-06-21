@@ -1,9 +1,7 @@
-package dev.psulej.dataintegrationprojectbackend.mortality.export;
+package dev.psulej.dataintegrationprojectbackend.mortality.convert;
 
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import dev.psulej.dataintegrationprojectbackend.common.parser.ObjectMapperProvider;
 import dev.psulej.dataintegrationprojectbackend.mortality.domain.MortalityData;
 import dev.psulej.dataintegrationprojectbackend.mortality.domain.Voivodeship;
 import dev.psulej.dataintegrationprojectbackend.mortality.repository.MortalityDataRepository;
@@ -15,8 +13,11 @@ import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
-import java.io.*;
-import java.text.SimpleDateFormat;
+import javax.xml.stream.XMLOutputFactory;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamWriter;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -24,24 +25,23 @@ import java.util.stream.Collectors;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class MortalityDataJsonExporter {
+public class MortalityDataXmlExporter{
 
     private static final int BATCH_SIZE = 500;
 
+    private final ObjectMapperProvider objectMapperProvider;
     private final MortalityDataRepository mortalityDataRepository;
     private final VoivodeshipRepository voivodeshipRepository;
 
     public void export(OutputStream outputStream) {
         try {
-            ObjectMapper mapper = new ObjectMapper()
-                    .findAndRegisterModules()
-                    .enable(SerializationFeature.INDENT_OUTPUT)
-                    .setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm"));
+            XMLOutputFactory xmlOutputFactory = XMLOutputFactory.newFactory();
+            XMLStreamWriter streamWriter = xmlOutputFactory.createXMLStreamWriter(outputStream);
+            XmlMapper mapper = objectMapperProvider.xmlObjectMapper();
 
-            JsonFactory factory = mapper.getFactory();
-            JsonGenerator jsonGenerator = factory.createGenerator(outputStream)
-                    .useDefaultPrettyPrinter();
-            jsonGenerator.writeStartArray();
+            streamWriter.writeStartDocument();
+            // items - START
+            streamWriter.writeStartElement("MortalityDataList");
 
             List<Voivodeship> voivodeships = voivodeshipRepository.findAll();
             Map<Long, String> voivodeshipByName = voivodeships.stream()
@@ -49,6 +49,7 @@ public class MortalityDataJsonExporter {
 
             PageRequest pageable = PageRequest.of(0, BATCH_SIZE, Sort.by("date"));
             Slice<MortalityData> slice = mortalityDataRepository.findSlice(pageable);
+
             do {
                 slice
                         .map(mortalityData -> MortalityDataRow.builder()
@@ -61,22 +62,25 @@ public class MortalityDataJsonExporter {
                                 .build())
                         .getContent()
                         .forEach(mortalityData -> {
-                            try {
-                                jsonGenerator.writeObject(mortalityData);
-                            } catch (IOException e) {
-                                throw new RuntimeException(e);
-                            }
-                        });
-                log.info("MortalityData slice of {} items have been written to output stream", slice.getContent().size());
+                    try {
+                        mapper.writeValue(streamWriter, mortalityData);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+                log.info("Mortality data slice of {} items have been written to output stream", slice.getContent().size());
                 pageable = PageRequest.of(pageable.getPageNumber() + 1, BATCH_SIZE);
                 slice = mortalityDataRepository.findSlice(pageable);
             } while (slice.hasNext());
 
-            jsonGenerator.writeEndArray();
-            jsonGenerator.close();
-            jsonGenerator.flush();
-            log.info("MortalityData has been exported");
-        } catch (IOException e) {
+            // items - END
+            streamWriter.writeEndElement();
+            streamWriter.writeEndDocument();
+            log.info("Mortality has been exported");
+
+            streamWriter.flush();
+            streamWriter.close();
+        } catch (XMLStreamException e) {
             throw new RuntimeException(e);
         }
     }

@@ -27,4 +27,8 @@ public class WeatherDataService {
 
         return weatherDataRepository.findByDateBetween(dateFrom, dateTo, pageable);
     }
+
+    public void deleteWeatherData() {
+        weatherDataRepository.truncateTable();
+    }
 }

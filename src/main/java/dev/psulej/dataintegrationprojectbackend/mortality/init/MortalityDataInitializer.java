@@ -38,8 +38,10 @@ public class MortalityDataInitializer {
 
     @Transactional
     public void initializeMortalityDataFromFile() {
-        mortalityDataRepository.truncateTable();
-        readMortalityDataFromFile();
+        if(mortalityDataRepository.count() == 0) {
+            mortalityDataRepository.truncateTable();
+            readMortalityDataFromFile();
+        }
     }
 
 
