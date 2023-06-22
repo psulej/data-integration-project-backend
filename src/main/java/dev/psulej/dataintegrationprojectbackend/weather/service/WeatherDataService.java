@@ -1,11 +1,14 @@
 package dev.psulej.dataintegrationprojectbackend.weather.service;
 
+import dev.psulej.dataintegrationprojectbackend.user.service.UserService;
 import dev.psulej.dataintegrationprojectbackend.weather.domain.WeatherData;
 import dev.psulej.dataintegrationprojectbackend.weather.repository.WeatherDataRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.time.*;
 
 @Service
@@ -13,6 +16,7 @@ import java.time.*;
 public class WeatherDataService {
 
     private final WeatherDataRepository weatherDataRepository;
+    private final UserService userService;
 
     public Page<WeatherData> getWeatherData(Pageable pageable) {
         Instant dateFrom = ZonedDateTime.of(
@@ -28,6 +32,8 @@ public class WeatherDataService {
         return weatherDataRepository.findByDateBetween(dateFrom, dateTo, pageable);
     }
 
+
+    @Transactional
     public void deleteWeatherData() {
         weatherDataRepository.truncateTable();
     }

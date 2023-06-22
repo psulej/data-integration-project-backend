@@ -1,6 +1,7 @@
 package dev.psulej.dataintegrationprojectbackend.config;
 
 import dev.psulej.dataintegrationprojectbackend.security.TokenAuthenticationFilter;
+import dev.psulej.dataintegrationprojectbackend.user.domain.UserRole;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

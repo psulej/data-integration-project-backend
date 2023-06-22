@@ -1,10 +1,10 @@
 package dev.psulej.dataintegrationprojectbackend.weather.controller;
 
+import dev.psulej.dataintegrationprojectbackend.weather.convert.WeatherDataJsonExporter;
+import dev.psulej.dataintegrationprojectbackend.weather.convert.WeatherDataJsonImporter;
+import dev.psulej.dataintegrationprojectbackend.weather.convert.WeatherDataXmlExporter;
 import dev.psulej.dataintegrationprojectbackend.weather.convert.WeatherDataXmlImporter;
 import dev.psulej.dataintegrationprojectbackend.weather.domain.WeatherData;
-import dev.psulej.dataintegrationprojectbackend.weather.convert.WeatherDataJsonExporter;
-import dev.psulej.dataintegrationprojectbackend.weather.convert.WeatherDataXmlExporter;
-import dev.psulej.dataintegrationprojectbackend.weather.convert.WeatherDataJsonImporter;
 import dev.psulej.dataintegrationprojectbackend.weather.service.WeatherDataService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
@@ -15,6 +15,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -85,7 +86,8 @@ public class WeatherDataController {
         }
     }
 
-    @DeleteMapping("/delete")
+    @DeleteMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public void deleteWeatherData() {
         weatherDataService.deleteWeatherData();
     }
