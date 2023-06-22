@@ -8,6 +8,7 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ResourceUtils;
 import org.springframework.util.StringUtils;
@@ -32,7 +33,7 @@ public class WeatherDataInitializer {
 
     private final WeatherDataRepository weatherDataRepository;
 
-    @Transactional
+    @Transactional(isolation = Isolation.REPEATABLE_READ)
     public void initializeWeatherDataFromFile() throws FileNotFoundException {
         if(weatherDataRepository.count() == 0) {
             weatherDataRepository.truncateTable();

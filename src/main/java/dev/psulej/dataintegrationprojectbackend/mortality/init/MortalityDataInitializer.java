@@ -11,6 +11,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ResourceUtils;
 
@@ -36,7 +37,7 @@ public class MortalityDataInitializer {
     private final MortalityDataRepository mortalityDataRepository;
     private final VoivodeshipRepository voivodeshipRepository;
 
-    @Transactional
+    @Transactional(isolation = Isolation.REPEATABLE_READ)
     public void initializeMortalityDataFromFile() {
         if(mortalityDataRepository.count() == 0) {
             mortalityDataRepository.truncateTable();
